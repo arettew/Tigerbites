@@ -1,4 +1,4 @@
-import urllib
+import urllib3 as urllib
 import re
 from bs4 import BeautifulSoup
 
