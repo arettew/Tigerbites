@@ -12,4 +12,4 @@ def today(request):
 def all(request):
     results = FoodItem.objects.values()
     list_results = list(results)
-    return HttpResponse(json.dumps(list_results))
+    return HttpResponse(json.dumps(sorted(list_results, key = lambda i: i['item_name'])))
