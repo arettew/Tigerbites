@@ -49,8 +49,8 @@ def scrapeDiningServices():
     locations = soup.find_all(id="resLocations")
     for location in locations: 
         for link in location("a"):
-            # Links to each individual dhall page 
-            scrapeDhallPage(menus_url + link["href"], menus_url, items, link.text)
+            # Links to each individual dhall page
+            scrapeDhallPage(menus_url + link["href"], menus_url, items, link.text.lstrip())
     return items
 
 def scrapeDhallPage(page_url, root, items, dhall):
@@ -96,7 +96,7 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
     item = FoodItem()
 
     item.meal = meal
-    item.dhall = dhall.lstrip()
+    item.dhall = dhall
     item.category = category.replace("--", '')[1:]
 
     name = soup.find("h2").text

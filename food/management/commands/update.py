@@ -11,9 +11,27 @@ class Command(BaseCommand):
         self.stdout.write("Scraping finished...")
         for item in foodItems: 
             if (validateItem(item)):
-                f = FoodItem(item.name, item.category, item.meal, item.calories, item.fat, item.protein, item.carbs)
-                self.stdout.write("Saving " + item.name + "...")
-                f.save()
+                if FoodItem.objects.filter(item_name = item.name).exists():
+                    # if it exists, update the fields
+                    saved_item = FoodItem.objects.get(item_name = item.name)
+                    if item.dhall == "":
+                        saved_item.dhall = item.dhall
+                    elif not item.dhall in saved_item.dhall:
+                        # item might be served in multiple dhalls 
+                        saved_item.dhall += "," + item.dhall
+                    saved_item.category = item.category
+                    saved_item.calories = item.calories
+                    saved_item.fat = item.fat
+                    saved_item.protein = item.protein 
+                    saved_item.carbs = item.carbs
+                    saved_item.save()
+                    self.stdout.write("Updating " + item.name + "...")
+                else:
+                    f = FoodItem(item.name, item.category, item.meal, item.dhall, item.calories, item.fat, item.protein, item.carbs)
+                    self.stdout.write("Saving " + item.name + "...")
+                    f.save()
+
+        
 
 
         self.stdout.write(self.style.SUCCESS("Success"))
