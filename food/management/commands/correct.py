@@ -6,16 +6,16 @@ class Command(BaseCommand):
     help = 'Correct any mistakes that may have occurred within saving items'
 
     def handle(self, *args, **options):
-        #  One time correction 
-        #self.stdout.write("Removing excess commas...")
-        #all_items = FoodItem.objects.all()
-        #for item in all_items: 
-            #if item.dhall != "" and item.dhall[0] == ",":
-                #item.dhall = item.dhall[1:]
-                #item.save()
-        #self.stdout.write("Finished")
+        #  One time correction - remove commas at beginning
+        self.stdout.write("Removing excess commas...")
+        all_items = FoodItem.objects.all()
+        for item in all_items: 
+            if item.dhall != "" and item.dhall[0] == ",":
+                item.dhall = item.dhall[1:]
+                item.save()
+        self.stdout.write("Finished")
 
-        # Recategorize the items currently in the database
+        # One time correction - recategorize the items currently in the database
         self.stdout.write("Beginning recategorizations...")
         all_items = FoodItem.objects.all()
         for item in all_items: 
