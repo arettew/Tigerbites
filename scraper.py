@@ -18,13 +18,18 @@ def scrapeTigerMenus():
 
     dhalls = {}
     for element in menu:
-        foodList = []
+        food_categories = {}
+        current_category = "-- Other --"
         for item in element("p"):
-            if not isMeal(item.text):
+            if "--" in item.text:
+                food_list = []
+                food_categories[item.text] = food_list
+                current_category = item.text
+            elif not isMeal(item.text):
                 # discard "Lunch/Breakfast/Dinner" text
-                foodList.append(item.text)
+                food_categories[current_category].append(item.text)
         # adds all items in dhall to dict 
-        dhalls[element("h3")[0].text] = foodList
+        dhalls[element("h3")[0].text] = food_categories
     
     return dhalls
 
@@ -141,3 +146,5 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
                 item.carbs = carbs
 
     items.append(item)
+
+scrapeTigerMenus()
