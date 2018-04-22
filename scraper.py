@@ -2,6 +2,8 @@ import urllib
 import urllib.request
 import re
 from bs4 import BeautifulSoup
+from fooditem import FoodItem
+import fooditem
 
 def isMeal(item):
     if item == "Lunch" or item == "Breakfast" or item == "Dinner":
@@ -34,18 +36,6 @@ def scrapeTigerMenus():
     return dhalls
 
 #-----------------------------------------------------------------------------------
-
-class FoodItem: 
-    name = ""
-    category = ""
-    meal = ""
-    calories = ""
-    protein = ""
-    carbs = ""
-    fat = ""
-    dhall = ""
-    ingredients = "" 
-    allergens = ""
 
 def scrapeDiningServices():
     menus_url = "https://campusdining.princeton.edu/dining/_Foodpro/online-menu/"
@@ -107,7 +97,6 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
 
     item.meal = meal
     item.dhall = dhall
-    item.category = category.replace("--", '')[1:]
 
     name = soup.find("h2").text
     if (name == ""):
@@ -149,7 +138,9 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
             else:
                 item.carbs = carbs
 
-    item.allergens = soup.find(class_ = "labelallergensvalue").text
-    item.ingredients = soup.find(class_ = "labelingredientsvalue").text
+    allergens = soup.find(class_ = "labelallergensvalue").text
+    ingredients = soup.find(class_ = "labelingredientsvalue").text
 
+    item.category = category
+    item.category = fooditem.categorize(item, ingredients, allergens)
     items.append(item)
