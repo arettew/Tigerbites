@@ -13,8 +13,7 @@ def scrapeTigerMenus():
     page = urllib.request.urlopen(page_url)
 
     soup = BeautifulSoup(page, "html.parser")
-    for b in soup("b"):
-        b.decompose()
+    # dhalls are separated by divds with this class
     menu = soup.find_all("div", class_= "col-sm-2")
 
     dhalls = {}
@@ -22,7 +21,9 @@ def scrapeTigerMenus():
         foodList = []
         for item in element("p"):
             if not isMeal(item.text):
+                # discard "Lunch/Breakfast/Dinner" text
                 foodList.append(item.text)
+        # adds all items in dhall to dict 
         dhalls[element("h3")[0].text] = foodList
     
     return dhalls
