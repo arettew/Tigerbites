@@ -44,6 +44,8 @@ class FoodItem:
     carbs = ""
     fat = ""
     dhall = ""
+    ingredients = "" 
+    allergens = ""
 
 def scrapeDiningServices():
     menus_url = "https://campusdining.princeton.edu/dining/_Foodpro/online-menu/"
@@ -57,6 +59,8 @@ def scrapeDiningServices():
         for link in location("a"):
             # Links to each individual dhall page
             scrapeDhallPage(menus_url + link["href"], menus_url, items, link.text.lstrip())
+            break 
+        break 
     return items
 
 def scrapeDhallPage(page_url, root, items, dhall):
@@ -145,6 +149,7 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
             else:
                 item.carbs = carbs
 
-    items.append(item)
+    item.allergens = soup.find(class_ = "labelallergensvalue").text
+    item.ingredients = soup.find(class_ = "labelingredientsvalue").text
 
-scrapeTigerMenus()
+    items.append(item)
