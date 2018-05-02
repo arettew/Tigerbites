@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from scraper import scrapeTigerMenus
 from food.models import FoodItem
 import json 
+import datetime
 
 # Create your views here.
 def today(request):

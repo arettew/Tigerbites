@@ -4,6 +4,7 @@ import re
 from bs4 import BeautifulSoup
 from fooditem import FoodItem
 import fooditem
+import datetime
 
 def isMeal(item):
     if item == "Lunch" or item == "Breakfast" or item == "Dinner":
@@ -12,6 +13,14 @@ def isMeal(item):
 
 def scrapeTigerMenus():
     page_url = "https://tigermenus.herokuapp.com/"
+
+    dt = datetime.datetime.now()
+    hour = dt.hour
+    BREAKFAST_HOUR = 9
+    if hour < BREAKFAST_HOUR:
+        # Tigermenus automatically skips breakfast 
+        page_url += "breakfast/" + str(dt.day)
+
     page = urllib.request.urlopen(page_url)
 
     soup = BeautifulSoup(page, "html.parser")
@@ -49,8 +58,6 @@ def scrapeDiningServices():
         for link in location("a"):
             # Links to each individual dhall page
             scrapeDhallPage(menus_url + link["href"], menus_url, items, link.text.lstrip())
-            break 
-        break 
     return items
 
 def scrapeDhallPage(page_url, root, items, dhall):
@@ -60,7 +67,8 @@ def scrapeDhallPage(page_url, root, items, dhall):
     days = soup.find_all(class_="menuDates")
     for day in days:
         # Links to each date on the menu page
-        scrapeDay(root + re.sub(" ", "%20", day["href"]), root, items, dhall)
+        link = re.sub(" ", "%20", day["href"])
+        scrapeDay(root + link, root, items, dhall)
 
 def scrapeDay(day_url, root, items, dhall):
     page = urllib.request.urlopen(day_url)
@@ -76,14 +84,17 @@ def scrapeMeal(meal_url, root, items, dhall, meal):
     meal_page = urllib.request.urlopen(meal_url)
     soup = BeautifulSoup(meal_page, "html.parser")
 
+    CATEGORY_CLASS = "pickmenucolmenucat"
+    FOOD_CLASS = "pickmenucoldispname"
+
     meal_items = soup.find_all("div")
     count = 0
     category = ""
     for item in meal_items:
         if item.has_attr("class"):
-            if item["class"][0] == "pickmenucolmenucat":
+            if item["class"][0] == CATEGORY_CLASS:
                 category = item.text
-            if item["class"][0] == "pickmenucoldispname":
+            if item["class"][0] == FOOD_CLASS:
                 for key in item:
                     if key.has_attr("href"):
                             scrapeFoodItem(root + key["href"], dhall, items, meal, category)
@@ -138,8 +149,11 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
             else:
                 item.carbs = carbs
 
-    allergens = soup.find(class_ = "labelallergensvalue").text
-    ingredients = soup.find(class_ = "labelingredientsvalue").text
+    ALLERGENS_CLASS = "labelallergensvalue"
+    INGREDIENTS_CLASS = "labelingredientsvalue"
+
+    allergens = soup.find(class_ = ALLERGENS_CLASS).text
+    ingredients = soup.find(class_ = INGREDIENTS_CLASS).text
 
     item.category = category
     item.category = fooditem.categorize(item, ingredients, allergens)
