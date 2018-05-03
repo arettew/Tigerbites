@@ -50,11 +50,13 @@ class Command(BaseCommand):
                 item.category = category 
                 item.save()
             self.stdout.write("Finished")
+        # One time correction. Add space after commas in relevant fields 
         elif arg == "space":
             self.stdout.write("Adding spaces after commas...")
             all_items = FoodItem.objects.all()
             for item in all_items: 
                 item.category = re.sub(",", ", ", item.category)
+                item.dhall = re.sub(",", ", ", item.dhall)
                 item.save()
             self.stdout.write("Finished")
         else: 
