@@ -16,9 +16,13 @@ def scrapeTigerMenus():
 
     dt = datetime.datetime.now()
     hour = dt.hour
+    day = day.day
+
     BREAKFAST_HOUR = 9
-    if hour < BREAKFAST_HOUR:
-        # Tigermenus automatically skips breakfast 
+    SATURDAY = 5
+
+    if hour < BREAKFAST_HOUR and day < SATURDAY:
+        # Tigermenus automatically skips breakfast on weekdays 
         page_url += "breakfast/" + str(dt.day)
 
     page = urllib.request.urlopen(page_url)
