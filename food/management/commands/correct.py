@@ -57,7 +57,6 @@ class Command(BaseCommand):
             for item in all_items: 
                 item.category = re.sub(",", ", ", item.category)
                 item.dhall = re.sub(",", ", ", item.dhall)
-                self.stdout.write(item.name)
                 item.save()
             self.stdout.write("Finished")
         else: 
