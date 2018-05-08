@@ -16,7 +16,7 @@ def scrapeTigerMenus():
 
     dt = datetime.datetime.now()
     hour = dt.hour
-    day = day.day
+    day = dt.day
 
     BREAKFAST_HOUR = 9
     SATURDAY = 5
