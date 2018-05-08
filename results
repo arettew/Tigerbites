@@ -1,0 +1,27 @@
+/app/.heroku/python/lib/python3.6/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Scraping started...
+Traceback (most recent call last):
+  File "manage.py", line 15, in <module>
+    execute_from_command_line(sys.argv)
+  File "/app/.heroku/python/lib/python3.6/site-packages/django/core/management/__init__.py", line 371, in execute_from_command_line
+    utility.execute()
+  File "/app/.heroku/python/lib/python3.6/site-packages/django/core/management/__init__.py", line 365, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/app/.heroku/python/lib/python3.6/site-packages/django/core/management/base.py", line 288, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/app/.heroku/python/lib/python3.6/site-packages/django/core/management/base.py", line 335, in execute
+    output = self.handle(*args, **options)
+  File "/app/food/management/commands/update.py", line 10, in handle
+    foodItems = scraper.scrapeDiningServices()
+  File "/app/scraper.py", line 64, in scrapeDiningServices
+    scrapeDhallPage(menus_url + link["href"], menus_url, items, link.text.lstrip())
+  File "/app/scraper.py", line 75, in scrapeDhallPage
+    scrapeDay(root + link, root, items, dhall)
+  File "/app/scraper.py", line 83, in scrapeDay
+    scrapeMeal(root + meal("a")[0]["href"], root, items, dhall, meal("a")[0]["name"])
+  File "/app/scraper.py", line 104, in scrapeMeal
+    scrapeFoodItem(root + key["href"], dhall, items, meal, category)
+  File "/app/scraper.py", line 159, in scrapeFoodItem
+    allergens = soup.find(class_ = ALLERGENS_CLASS).text
+AttributeError: 'NoneType' object has no attribute 'text'

@@ -156,9 +156,17 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
     ALLERGENS_CLASS = "labelallergensvalue"
     INGREDIENTS_CLASS = "labelingredientsvalue"
 
-    allergens = soup.find(class_ = ALLERGENS_CLASS).text
-    ingredients = soup.find(class_ = INGREDIENTS_CLASS).text
+    allergens = soup.find(class_ = ALLERGENS_CLASS)
+    ingredients = soup.find(class_ = INGREDIENTS_CLASS)
+    if allergens is None: 
+        allergens_text = ""
+    else:
+        allergens_text = allergens.text
+    if ingredients is None: 
+        ingredients_text = ""
+    else: 
+        ingredients_text = ingredients.text
 
     item.category = category
-    item.category = fooditem.categorize(item, ingredients, allergens)
+    item.category = fooditem.categorize(item, ingredients_text, allergens_text)
     items.append(item)
