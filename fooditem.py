@@ -20,20 +20,20 @@ def categorize(item, ingredients, allergens):
         category += "Entree"
     
     if "vegetarian" in item.category.lower():
-        category += "Vegetarian" if category == "" else ",Vegetarian"
+        category += "Vegetarian" if category == "" else ", Vegetarian"
     if "vegan" in item.category.lower(): 
-        category += "Vegan" if category == "" else ",Vegan"
+        category += "Vegan" if category == "" else ", Vegan"
 
     if not "Vegetarian" in category and not "Vegan" in category and hasMeat(ingredients, allergens):
-        category += "Meat" if category == "" else ",Meat"
+        category += "Meat" if category == "" else ", Meat"
     elif hasDairy(allergens):
         if not "Vegetarian" in category:
-            category += "Vegetarian" if category == "" else ",Vegetarian"
+            category += "Vegetarian" if category == "" else ", Vegetarian"
     else:
         if not "Vegetarian" in category:
-            category += "Vegetarian" if category == "" else ",Vegetarian"
+            category += "Vegetarian" if category == "" else ", Vegetarian"
         if not "Vegan" in category:
-            category += ",Vegan"
+            category += ", Vegan"
 
     return category
 
