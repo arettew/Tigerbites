@@ -25,9 +25,11 @@ class Command(BaseCommand):
                     saved_item.protein = item.protein 
                     saved_item.carbs = item.carbs
                     saved_item.save()
+                    self.stdout.write("Updating " + saved_item.name + "...")
                 else:
                     f = FoodItem(item.name, item.category, item.meal, item.dhall, item.calories, item.fat, item.protein, item.carbs)
                     f.save()
+                    self.stdout.write("Saving " + saved_item.name + "...")
 
         self.stdout.write(self.style.SUCCESS("Success"))
 
