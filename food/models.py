@@ -11,8 +11,8 @@ class FoodItem(models.Model):
    fat = models.FloatField(default=0)
    protein = models.FloatField(default=0)
    carbs = models.FloatField(default=0)
-   ingredients = models.CharField(max_length = 500, default = "")
-   allergens = models.CharField(max_length = 500, default = "")
+   ingredients = models.CharField(max_length = 2000, default = "")
+   allergens = models.CharField(max_length = 2000, default = "")
 
    def __str__(self):
        return self.item_name
