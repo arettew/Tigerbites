@@ -53,13 +53,16 @@ class Command(BaseCommand):
                 item.save()
             self.stdout.write("Finished")
         # One time correction. Add space after commas in relevant fields 
-        elif arg == "space":
+        elif arg == "space_after_commas":
             self.stdout.write("Adding spaces after commas...")
             all_items = FoodItem.objects.all()
             for item in all_items: 
                 item.category = re.sub(",", ", ", item.category)
                 item.dhall = re.sub(",", ", ", item.dhall)
                 item.save()
+            self.stdout.write("Finished")
+        elif arg == "space":
+            self.stdout.write("Removing excess space...")
             self.stdout.write("Finished")
         else: 
             self.stdout.write("Not a valid correction")
