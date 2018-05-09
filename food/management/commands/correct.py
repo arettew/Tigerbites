@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 item.save()
             self.stdout.write("Finished")
         # One time correction - recategorize the items currently in the database
-        elif arg == "categories":
+        elif arg == "recategorize":
             self.stdout.write("Beginning recategorizations...")
             all_items = FoodItem.objects.all()
             for item in all_items: 
