@@ -7,6 +7,8 @@ class FoodItem:
     carbs = ""
     fat = ""
     dhall = ""
+    ingredients = ""
+    allergens = "" 
 
 def categorize(item, ingredients, allergens):
     category = ""

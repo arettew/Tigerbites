@@ -26,9 +26,11 @@ class Command(BaseCommand):
                     saved_item.fat = item.fat
                     saved_item.protein = item.protein 
                     saved_item.carbs = item.carbs
+                    saved_item.ingredients = item.ingredients
+                    saved_item.allergens = item.allergens
                     saved_item.save()
                 else:
-                    f = FoodItem(item.name, item.category, item.meal, item.dhall, item.calories, item.fat, item.protein, item.carbs)
+                    f = FoodItem(item.name, item.category, item.meal, item.dhall, item.calories, item.fat, item.protein, item.carbs, item.ingredients, item.allergens)
                     f.save()
 
         self.stdout.write(self.style.SUCCESS("Success"))

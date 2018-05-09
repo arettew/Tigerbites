@@ -165,5 +165,7 @@ def scrapeFoodItem(item_url, dhall, items, meal, category):
         ingredients_text = ingredients.text
 
     item.category = category
+    item.allergens = allergens_text
+    item.ingredients = ingredients_text
     item.category = fooditem.categorize(item, ingredients_text, allergens_text)
     items.append(item)
