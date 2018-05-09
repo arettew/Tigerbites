@@ -20,7 +20,7 @@ class Command(BaseCommand):
                     item.dhall = item.dhall[2:]
                 elif item.dhall != "" and item.dhall[0] == ",":
                     item.dhall = item.dhall[1:]
-                    item.save()
+                item.save()
             self.stdout.write("Finished")
         # One time correction - recategorize the items currently in the database
         elif arg == "categories":
