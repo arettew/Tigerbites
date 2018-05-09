@@ -14,16 +14,15 @@ def isMeal(item):
 def scrapeTigerMenus():
     page_url = "https://tigermenus.herokuapp.com/"
 
-    dt = datetime.datetime.now()
-    hour = dt.hour
-    day = dt.weekday
+    cur_hour = datetime.datetime.now().hour
+    cur_day = datetime.datetime.today().weekday()
 
     BREAKFAST_HOUR = 9
     SATURDAY = 5
 
-    if hour < BREAKFAST_HOUR and day < SATURDAY:
+    if cur_hour < BREAKFAST_HOUR and cur_day < SATURDAY:
         # Tigermenus automatically skips breakfast on weekdays 
-        page_url += "breakfast/" + str(dt.day)
+        page_url += "breakfast/" + str(cur_day)
 
     page = urllib.request.urlopen(page_url)
 
