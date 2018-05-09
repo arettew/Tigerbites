@@ -26,10 +26,10 @@ def categorize(item, ingredients, allergens):
 
     if not "Vegetarian" in category and not "Vegan" in category and hasMeat(ingredients, allergens):
         category += "Meat" if category == "" else ", Meat"
-    elif hasDairy(allergens):
+    elif hasDairy(allergens) and "Meat" not in category:
         if not "Vegetarian" in category:
             category += "Vegetarian" if category == "" else ", Vegetarian"
-    else:
+    elif "Meat" not in category:
         if not "Vegetarian" in category:
             category += "Vegetarian" if category == "" else ", Vegetarian"
         if not "Vegan" in category:

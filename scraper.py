@@ -82,8 +82,6 @@ def scrapeDay(day_url, root, items, dhall):
         scrapeMeal(root + meal("a")[0]["href"], root, items, dhall, meal("a")[0]["name"])
 
 def scrapeMeal(meal_url, root, items, dhall, meal):
-    if (meal == "Breakfast"):
-        return
     meal_page = urllib.request.urlopen(meal_url)
     soup = BeautifulSoup(meal_page, "html.parser")
 
