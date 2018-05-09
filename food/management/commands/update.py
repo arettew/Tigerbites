@@ -16,9 +16,11 @@ class Command(BaseCommand):
                     saved_item = FoodItem.objects.get(item_name = item.name)
                     if item.dhall == "":
                         saved_item.dhall = item.dhall
-                    elif not item.dhall in saved_item.dhall:
+                    elif not item.dhall in saved_item.dhall and dhall != "":
                         # item might be served in multiple dhalls 
                         saved_item.dhall += "," + item.dhall
+                    elif not item.dhall in saved_item.dhall:
+                        saved_item.dhall += item.dhall
                     saved_item.category = item.category
                     saved_item.calories = item.calories
                     saved_item.fat = item.fat

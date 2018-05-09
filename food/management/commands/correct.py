@@ -16,7 +16,9 @@ class Command(BaseCommand):
             self.stdout.write("Removing excess commas...")
             all_items = FoodItem.objects.all()
             for item in all_items: 
-                if item.dhall != "" and item.dhall[0] == ",":
+                if item.dhall != "" and item.dhall[0:2] == ", ":
+                    item.dhall = item.dhall[2:]
+                elif item.dhall != "" and item.dhall[0] == ",":
                     item.dhall = item.dhall[1:]
                     item.save()
             self.stdout.write("Finished")
