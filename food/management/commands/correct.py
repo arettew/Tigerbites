@@ -63,6 +63,11 @@ class Command(BaseCommand):
             self.stdout.write("Finished")
         elif arg == "space":
             self.stdout.write("Removing excess space...")
+            all_items = FoodItem.objects.all()
+            for item in all_items:
+                item.category = re.sub(" +", " ", item.category)
+                item.dhall = re.sub(" +", " ", item.dhall)
+                item.save()
             self.stdout.write("Finished")
         else: 
             self.stdout.write("Not a valid correction")
