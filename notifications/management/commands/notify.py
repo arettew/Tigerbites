@@ -23,7 +23,8 @@ class Command(BaseCommand):
         for user in users: 
             matches = matchItems(Token.get_favorites(user), daily)
             if matches:
-                send_push_message(user.token, message(matches), extra=None)
+                print(message(matches))
+                send_push_message(user.token, message(matches))
 
         self.stdout.write(self.style.SUCCESS("success"))
 
@@ -33,9 +34,9 @@ def send_push_message(token, message, extra=None):
             PushMessage(to=token, body=message, data=extra)
         )
     except PushServerError as exc: 
-        pass
+        print("invalid")
     except (ConnectionError, HTTPError) as exc: 
-        pass
+        print("Connection or HTTPError")
 
     try:
         # We got a response back, but we don't know whether it's an error yet
@@ -44,16 +45,17 @@ def send_push_message(token, message, extra=None):
         # Mark the push token as inactive
         from notifications.models import PushToken
         PushToken.objects.filter(token=token).update(active=False)
+        print("Device not registered error")
     except PushResponseError as exc:
         # Encountered some other per-notification error.
-        pass
+        print ("PushResponseError")
 
 # Creates a message based on the matches in the users' favorite foods and the current items 
 def message(matches): 
     message = ""
     for dhall in matches: 
         message += "At " + dhall + ": "
-        for item in matches: 
+        for item in matches[dhall]: 
             message += item + ", "
         message = message[:-2]
         message += ". "
@@ -64,9 +66,10 @@ def message(matches):
 def matchItems(favorites, daily):
     matches = {} 
 
-    for item in daily: 
-        if item in favorites: 
-            if not dhall in matches: 
-                matches[dhall] = []
-            matches[dhall].append(item)
+    for dhall in daily:
+        for item in daily[dhall]: 
+            if item in favorites: 
+                if not dhall in matches: 
+                    matches[dhall] = []
+                matches[dhall].append(item)
     return matches

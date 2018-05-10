@@ -17,8 +17,8 @@ def scrapeTigerMenus():
     cur_hour = datetime.now(timezone.utc).hour
     cur_day = datetime.now(timezone.utc).weekday()
 
-    BREAKFAST_START = 9
-    BREAKFAST_END = 13
+    BREAKFAST_START = 5
+    BREAKFAST_END = 14
     SATURDAY = 5
 
     if cur_hour > BREAKFAST_START and cur_hour < BREAKFAST_END and cur_day < SATURDAY:

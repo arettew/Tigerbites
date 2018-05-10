@@ -16,10 +16,11 @@ def categorize(item, ingredients, allergens):
         category += "Soup"
     elif "salad" in item.category.lower(): 
         category += "Salad"
-    elif "side" in item.category.lower():
-        category += "Side"
     elif "entree" in item.category.lower():
         category += "Entree"
+    elif "side" in item.category.lower():
+        category += "Side"
+    
     
     if "vegetarian" in item.category.lower():
         category += "Vegetarian" if category == "" else ", Vegetarian"
