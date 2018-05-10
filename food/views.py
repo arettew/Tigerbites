@@ -8,7 +8,7 @@ import datetime
 # Create your views here.
 def today(request):
     scraping_results = scrapeTigerMenus()
-    all_items = list(FoodItem.objects.all().values_list('item_name', flat=True))
+    all_items = sorted(list(FoodItem.objects.all().values_list('item_name', flat=True)))
     
     food = {}
 
