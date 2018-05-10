@@ -21,7 +21,7 @@ class Command(BaseCommand):
         daily = scraper.tigerMenusAsDhallList()
 
         for user in users: 
-            matches = matchItems(user.favorites, daily)
+            matches = matchItems(Token.get_favorites(user), daily)
             if matches:
                 send_push_message(user.token, message(matches), extra=None)
 

@@ -35,14 +35,14 @@ def token(request):
                 else:
                     favorites.remove(name)
             
-                Token.set_favorite(user, favorites)
+                Token.set_favorites(user, favorites)
                 user.save()
                 return HttpResponse(status=202)
             else: 
                 # User doesn't already exist within system 
                 favorites = [name]
                 user = Token(token_val, "")
-                Token.set_favorite(user, favorites)    
+                Token.set_favorites(user, favorites)    
                 user.save()
                 return HttpResponse(status=202)
 

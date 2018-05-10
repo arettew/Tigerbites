@@ -13,3 +13,11 @@ class PostTest(TestCase):
         response = token(request)
         self.assertEqual(response.status_code, 202)
 
+        request = self.factory.post('/notifications', json.dumps({'to': 'token', 'title': 'apple', 'data': {'button': False}}), content_type='application/json')
+        response = token(request)
+        self.assertEquals(response.status_code, 202)
+
+        request = self.factory.post('/notifications', json.dumps({'to': 'token', 'title': 'apple', 'data': {'button': True}}), content_type='application/json')
+        response = token(request)
+        self.assertEquals(response.status_code, 202)
+
