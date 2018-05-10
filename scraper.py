@@ -4,7 +4,7 @@ import re
 from bs4 import BeautifulSoup
 from fooditem import FoodItem
 import fooditem
-import datetime
+from datetime import datetime, timezone
 
 def isMeal(item):
     if item == "Lunch" or item == "Breakfast" or item == "Dinner":
@@ -14,13 +14,14 @@ def isMeal(item):
 def scrapeTigerMenus():
     page_url = "https://tigermenus.herokuapp.com/"
 
-    cur_hour = datetime.datetime.now().hour
-    cur_day = datetime.datetime.today().weekday()
+    cur_hour = datetime.now(timezone.utc).hour
+    cur_day = datetime.now(timezone.utc).weekday()
 
-    BREAKFAST_HOUR = 9
+    BREAKFAST_START = 9
+    BREAKFAST_END = 14
     SATURDAY = 5
 
-    if cur_hour < BREAKFAST_HOUR and cur_day < SATURDAY:
+    if cur_hour > BREAKFAST_START and cur_hour < BREAKFAST_END and cur_day < SATURDAY:
         # Tigermenus automatically skips breakfast on weekdays 
         page_url += "breakfast/" + str(cur_day)
 
