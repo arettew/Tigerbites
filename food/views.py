@@ -9,7 +9,6 @@ import datetime
 def today(request):
     scraping_results = scrapeTigerMenus()
     all_items = sorted(list(FoodItem.objects.all().values_list('item_name', flat=True)))
-    
     food = {}
 
     # Get the index number of the item in the database 
@@ -27,11 +26,8 @@ def today(request):
                 except: 
                     # This item isn't in the database; throw it out and remove category if empty
                     scraping_results[dhall][category].remove(item)
-                    if not food[dhall][category]:
-                        del food[dhall][category]
 
-    return HttpResponse(json.dumps(food))
-
+    return HttpResponse(json.dumps(scraping_results))
 def all(request):
     results = FoodItem.objects.values()
     list_results = list(results)
