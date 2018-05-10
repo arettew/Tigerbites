@@ -48,6 +48,19 @@ def scrapeTigerMenus():
 
     return dhalls
 
+def tigerMenusAsDhallList(): 
+    scraping_results = scrapeTigerMenus()
+
+    # Convert scraping results to a dict of dhalls with a list of items
+    daily = {}
+    for dhall in scraping_results: 
+            daily[dhall] = []
+            for category in scraping_results[dhall]:
+                for item in scraping_results[dhall][category]:
+                    daily[dhall].append(item)
+    
+    return daily
+
 #-----------------------------------------------------------------------------------
 
 def scrapeDiningServices():
