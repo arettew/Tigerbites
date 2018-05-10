@@ -30,10 +30,10 @@ def token(request):
             
                 # Adds or removes from favorites
                 favorites = Token.get_favorites(user)
-                if not button:
-                    favorites.append(name)
-                else:
+                if name in favorites: 
                     favorites.remove(name)
+                else: 
+                    favorites.append(name)
             
                 Token.set_favorites(user, favorites)
                 user.save()
