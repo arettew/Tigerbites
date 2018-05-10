@@ -18,7 +18,7 @@ def scrapeTigerMenus():
     cur_day = datetime.now(timezone.utc).weekday()
 
     BREAKFAST_START = 9
-    BREAKFAST_END = 14
+    BREAKFAST_END = 13
     SATURDAY = 5
 
     if cur_hour > BREAKFAST_START and cur_hour < BREAKFAST_END and cur_day < SATURDAY:
@@ -45,7 +45,7 @@ def scrapeTigerMenus():
                 food_categories[current_category].append(item.text)
         # adds all items in dhall to dict 
         dhalls[element("h3")[0].text] = food_categories
-    
+
     return dhalls
 
 #-----------------------------------------------------------------------------------

@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
 
 INSTALLED_APPS = [
     'food.apps.FoodConfig',
+    'notifications.apps.NotificationsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
