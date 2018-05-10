@@ -20,12 +20,16 @@ def today(request):
             if not category in food[dhall]:
                 food[dhall][category] = {}
             for item in scraping_results[dhall][category]:
-                # Check if we've stored this item 
                 try:
+                    # Try getting the index of this item in the database
                     index = all_items.index(item)
                     food[dhall][category][item] = index
                 except: 
+                    # This item isn't in the database; throw it out and remove category if empty
                     scraping_results[dhall][category].remove(item)
+                    if not food[dhall][category]:
+                        del food[dhall][category]
+
     return HttpResponse(json.dumps(food))
 
 def all(request):
