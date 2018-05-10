@@ -9,7 +9,7 @@ class PostTest(TestCase):
         self.factory = RequestFactory()
     
     def test_details(self):
-        request = self.factory.post('/notifications', json.dumps({'token': {'value': 'token'}, 'user': {'userData': {'button': False, "name": 'food'}}}), content_type='application/json')
+        request = self.factory.post('/notifications', json.dumps({'to': 'token', 'title': 'food', 'data': {'button': False}}), content_type='application/json')
         response = token(request)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 202)
 

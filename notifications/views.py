@@ -9,20 +9,18 @@ from notifications.models import Token
 def token(request):
     if request.method == 'POST':
         try:
-
             post_data = json.loads(request.body)
             # Does this have all the information we expect? 
-            if not "token" in post_data: 
+            if not "to" in post_data: 
                 return HttpResponse(status=400)
-            elif not "value" in post_data["token"]:
+            elif not "title" in post_data:
                 return HttpResponse(status=400)
-            elif not "user" in post_data:
-                return HttpResponse(status=400)
-            elif not "userData" in post_data["user"]:
+            elif not "data" in post_data:
                 return HttpResponse(status=400)
 
-            token_val = post_data["token"]["value"]
-            data = post_data["user"]["userData"]
+            token_val = post_data["to"]
+            name = post_data["title"]
+            button = post_data["data"]["button"]
 
             if Token.objects.filter(token=token_val).exists(): 
                 # User exists
@@ -30,18 +28,20 @@ def token(request):
             
                 # Adds or removes from favorites
                 favorites = user.favorites
-                if not data["button"]:
-                    favorites.append(data["name"])
+                if not button:
+                    favorites.append(name)
                 else:
-                    favorites.remove(data["name"])
+                    favorites.remove(name)
                 user.favorites = favorites
-                
+
                 user.save()
+                return HttpResponse(status=202)
             else: 
                 # User doesn't already exist within system 
-                favorites = [data["name"]]
+                favorites = [name]
                 user = Token(token_val, favorites)    
                 user.save()
+                return HttpResponse(status=202)
 
         except: 
             return HttpResponse(status=400)
