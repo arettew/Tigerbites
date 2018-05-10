@@ -12,9 +12,9 @@ class FoodItem:
 
 def categorize(item, ingredients, allergens):
     category = ""
-    if "soup" in item.category.lower():
+    if "soup" in item.category.lower() or "soup" in item.name.lower():
         category += "Soup"
-    elif "salad" in item.category.lower(): 
+    elif "salad" in item.category.lower() or "salad" in item.name.lower(): 
         category += "Salad"
     elif "entree" in item.category.lower():
         category += "Entree"
