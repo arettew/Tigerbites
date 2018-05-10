@@ -6,7 +6,6 @@ from notifications.models import Token
 
 # Create your views here.
 
-@csrf_exempt
 def token(request):
     if request.method == 'POST':
         try:
