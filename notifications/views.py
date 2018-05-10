@@ -17,12 +17,9 @@ def token(request):
                 return HttpResponse(status=400)
             elif not "title" in post_data:
                 return HttpResponse(status=400)
-            elif not "data" in post_data:
-                return HttpResponse(status=400)
 
             token_val = post_data["to"]
             name = post_data["title"]
-            button = post_data["data"]["button"]
 
             if Token.objects.filter(token=token_val).exists(): 
                 # User exists
