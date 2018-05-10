@@ -27,7 +27,7 @@ def today(request):
                     # This item isn't in the database; throw it out and remove category if empty
                     scraping_results[dhall][category].remove(item)
 
-    return HttpResponse(json.dumps(scraping_results))
+    return HttpResponse(json.dumps(food))
 def all(request):
     results = FoodItem.objects.values()
     list_results = list(results)
