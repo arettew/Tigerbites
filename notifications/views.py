@@ -27,19 +27,22 @@ def token(request):
             if Token.objects.filter(token=token_val).exists(): 
                 # User exists
                 user = Token.objects.filter(token=token_val).first()
-
+            
                 # Adds or removes from favorites
                 favorites = user.favorites
                 if not data["button"]:
                     favorites.append(data["name"])
                 else:
                     favorites.remove(data["name"])
+                user.favorites = favorites
+                
+                user.save()
             else: 
                 # User doesn't already exist within system 
                 favorites = [data["name"]]
                 user = Token(token_val, favorites)    
+                user.save()
 
-            user.save()
         except: 
             return HttpResponse(status=400)
         
