@@ -16,12 +16,13 @@ def today(request):
         if not dhall in food: 
             food[dhall] = {}
         for category in scraping_results[dhall]:
-            if not category in food[dhall]:
-                food[dhall][category] = {}
             for item in scraping_results[dhall][category]:
                 try:
                     # Try getting the index of this item in the database
                     index = all_items.index(item)
+                    
+                    if not category in food[dhall]:
+                        food[dhall][category] = {}
                     food[dhall][category][item] = index
                 except: 
                     # This item isn't in the database; throw it out and remove category if empty
