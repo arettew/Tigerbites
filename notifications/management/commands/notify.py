@@ -33,19 +33,9 @@ def send_push_message(token, message, extra=None):
             PushMessage(to=token, body=message, data=extra)
         )
     except PushServerError as exc: 
-        rollbar.report_exc_info(
-            extra_data={
-                'token': token,
-                'message': message,
-                'extra': extra,
-                'errors': exc.errors,
-                'response_data': exc.response_data,
-            })
-        raise
+        pass
     except (ConnectionError, HTTPError) as exc: 
-        rollbar.report_exc_info(
-            extra_data={'token': token, 'message': message, 'extra': extra})
-        raise self.retry(exc=exc)
+        pass
 
     try:
         # We got a response back, but we don't know whether it's an error yet
@@ -56,14 +46,7 @@ def send_push_message(token, message, extra=None):
         PushToken.objects.filter(token=token).update(active=False)
     except PushResponseError as exc:
         # Encountered some other per-notification error.
-        rollbar.report_exc_info(
-            extra_data={
-                'token': token,
-                'message': message,
-                'extra': extra,
-                'push_response': exc.push_response._asdict(),
-            })
-        raise self.retry(exc=exc)
+        pass
 
 # Creates a message based on the matches in the users' favorite foods and the current items 
 def message(matches): 
