@@ -10,7 +10,8 @@ class FoodItem:
     ingredients = ""
     allergens = "" 
 
-def categorize(item, ingredients, allergens):
+# Assigns categories to the FoodItem passed as an argument 
+def categorize(item):
     category = ""
     if "soup" in item.category.lower() or "soup" in item.name.lower():
         category += "Soup"
@@ -27,12 +28,15 @@ def categorize(item, ingredients, allergens):
     if "vegan" in item.category.lower(): 
         category += "Vegan" if category == "" else ", Vegan"
 
-    if not "Vegetarian" in category and not "Vegan" in category and hasMeat(item.name, ingredients, allergens):
+    if not "Vegetarian" in category and not "Vegan" in category and hasMeat(item):
+        # Item has meat 
         category += "Meat" if category == "" else ", Meat"
-    elif hasDairy(allergens) and not "Meat" in category:
+    elif hasDairy(item) and not "Meat" in category:
+        # Item is vegetarian but not vegan 
         if not "Vegetarian" in category:
             category += "Vegetarian" if category == "" else ", Vegetarian"
     elif not "Meat" in category:
+        # Item is vegan and vegetarian 
         if not "Vegetarian" in category:
             category += "Vegetarian" if category == "" else ", Vegetarian"
         if not "Vegan" in category:
@@ -40,39 +44,45 @@ def categorize(item, ingredients, allergens):
 
     return category
 
-def hasMeat(name, ingredients, allergens):
-    if "chicken" in ingredients.lower() or "chicken" in name.lower():
+# Attempts to determine whether this item contains meat 
+def hasMeat(item):
+    if "meatless" in item.name.lower(): 
+        return False
+    if "chicken" in item.ingredients.lower() or "chicken" in item.name.lower():
         return True
-    if "beef" in ingredients.lower() or "beef" in name.lower():
+    if "beef" in item.ingredients.lower() or "beef" in item.name.lower():
         return True 
-    if "veal" in ingredients.lower() or "veal" in name.lower():
+    if "veal" in item.ingredients.lower() or "veal" in item.name.lower():
         return True
-    if "duck" in ingredients.lower() or "duck" in name.lower():
+    if "duck" in item.ingredients.lower() or "duck" in item.name.lower():
         return True
-    if "ham" in ingredients.lower() or "ham" in name.lower():
+    if "ham" in item.ingredients.lower() or "ham" in item.name.lower():
         return True
-    if "meat" in ingredients.lower():
+    if "meat" in item.ingredients.lower():
         return True
-    if "fish" in allergens.lower() or "fish" in name.lower():
+    if "fish" in item.allergens.lower() or "fish" in item.name.lower():
         return True
-    if "shellfish" in allergens.lower(): 
+    if "shellfish" in item.allergens.lower(): 
         return True
-    if "bacon" in ingredients.lower():
+    if "bacon" in item.ingredients.lower():
         return True
-    if "pork" in ingredients.lower() or "pork" in name.lower():
+    if "pork" in item.ingredients.lower() or "pork" in item.name.lower():
         return True
-    if "turkey" in ingredients.lower() or "turkey" in name.lower(): 
+    if "turkey" in item.ingredients.lower() or "turkey" in item.name.lower(): 
         return True
-    if "prosciutto" in ingredients.lower() or "prosciutto" in name.lower():
+    if "prosciutto" in item.ingredients.lower() or "prosciutto" in item.name.lower():
         return True
-    if "hot dog" in ingredients.lower() or "hot dog" in name.lower(): 
+    if "hot dog" in item.ingredients.lower() or "hot dog" in item.name.lower(): 
         return True
-    if "kielbasa" in ingredients.lower() or "kielbasa" in name.lower(): 
+    if "kielbasa" in item.ingredients.lower() or "kielbasa" in item.name.lower(): 
         return True
+        
     return False
 
-def hasDairy(allergens):
-    if "milk" in allergens.lower():
+# Determines whether this item has milk or eggs 
+def hasDairy(item):
+    # Dhalls uniformly list these items in allergens 
+    if "milk" in item.allergens.lower():
         return True
-    if "egg" in allergens.lower():
+    if "egg" in item.allergens.lower():
         return True

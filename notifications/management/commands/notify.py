@@ -18,38 +18,37 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         users = Token.objects.all()
 
-        # Get list of daily items 
-        daily = scraper.tigerMenusAsDhallList()
+        # Get list of items for the next meal 
+        next_meal = scraper.tigerMenusAsDhallList()
 
         for user in users: 
-            matches = matchItems(Token.get_favorites(user), daily)
+            # Find matches to use to send notification
+            matches = matchItems(Token.get_favorites(user), next_meal)
             if matches:
-                print(message(matches))
                 send_push_message(user.token, message(matches))
 
         self.stdout.write(self.style.SUCCESS("success"))
 
 def send_push_message(token, message, extra=None):
+    # Send the message 
     try:
-        response = PushClient().publish(
-            PushMessage(to=token, body=message, data=extra)
-        )
-    except PushServerError as exc: 
-        print("invalid")
-    except (ConnectionError, HTTPError) as exc: 
-        print("Connection or HTTPError")
+        response = PushClient().publish(PushMessage(to=token, body=message, data=extra))
+    except:
+        print("An error occurred when trying the send the message")
+        pass
 
     try:
-        # We got a response back, but we don't know whether it's an error yet
+        # Did we get a response? 
         response.validate_response()
     except DeviceNotRegisteredError:
-        # Mark the push token as inactive
+        # Mark the push token as inactive and remove from our database
         from notifications.models import PushToken
         PushToken.objects.filter(token=token).update(active=False)
-        print("Device not registered error")
+        Token.objects.filter(token=token).delete()
     except PushResponseError as exc:
-        # Encountered some other per-notification error.
-        print ("PushResponseError")
+        # Some other response error 
+        print("There was a response error")
+        pass
 
 # Creates a message based on the matches in the users' favorite foods and the current items 
 def message(matches): 
@@ -58,17 +57,18 @@ def message(matches):
         message += "At " + dhall + ": "
         for item in matches[dhall]: 
             message += item + ", "
+            # Removes last comma and space
         message = message[:-2]
         message += ". "
     return message
 
 
-# Determines if there is a match between a list of the users favorites and the daily items
-def matchItems(favorites, daily):
+# Determines if there is a match between a list of the user's favorites and the daily items
+def matchItems(favorites, next_meal):
     matches = {} 
 
-    for dhall in daily:
-        for item in daily[dhall]: 
+    for dhall in next_meal:
+        for item in next_meal[dhall]: 
             if item in favorites: 
                 if not dhall in matches: 
                     matches[dhall] = []
