@@ -75,6 +75,8 @@ def scrapeDiningServices():
         for link in location("a"):
             # Links to each individual dhall page
             scrapeDhallPage(menus_url + link["href"], menus_url, items, link.text.lstrip())
+            break
+        break
     return items
 
 def scrapeDhallPage(page_url, root, items, dhall):

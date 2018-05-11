@@ -69,6 +69,12 @@ class Command(BaseCommand):
                 item.dhall = re.sub(" +", " ", item.dhall)
                 item.save()
             self.stdout.write("Finished")
+        elif arg == "grad":
+            self.stdout.write("Removing space after \"Grad College")
+            all_items = FoodItem.objects.all()
+            for item in all_items:
+                item.dhall = re.sub("Graduate College ", "Graduate College", item.dhall)
+                item.save()
         else: 
             self.stdout.write("Not a valid correction")
             return

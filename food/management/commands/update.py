@@ -18,7 +18,10 @@ class Command(BaseCommand):
                         saved_item.dhall = item.dhall
                     elif not item.dhall in saved_item.dhall and saved_item.dhall != "":
                         # item might be served in multiple dhalls 
-                        saved_item.dhall += "," + item.dhall
+                        if "Graduate" in item.dhall: 
+                            # Grad college dhall has space after "Grad College"
+                            item.dhall = re.sub("College ", "College", item.dhall)
+                        saved_item.dhall += ", " + item.dhall
                     elif not item.dhall in saved_item.dhall:
                         saved_item.dhall += item.dhall
                     saved_item.category = item.category
