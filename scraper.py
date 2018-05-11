@@ -17,11 +17,11 @@ def scrapeTigerMenus():
     cur_hour = datetime.now(timezone.utc).hour
     cur_day = datetime.now(timezone.utc).weekday()
 
-    BREAKFAST_START = 5
+    BREAKFAST_START = 2
     BREAKFAST_END = 14
     SATURDAY = 5
 
-    if cur_hour > BREAKFAST_START and cur_hour < BREAKFAST_END and cur_day < SATURDAY:
+    if cur_hour >= BREAKFAST_START and cur_hour <= BREAKFAST_END and cur_day < SATURDAY:
         # Tigermenus automatically skips breakfast on weekdays 
         page_url += "breakfast/" + str(cur_day)
 

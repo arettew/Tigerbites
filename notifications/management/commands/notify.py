@@ -10,6 +10,7 @@ from requests.exceptions import ConnectionError
 from requests.exceptions import HTTPError
 
 import scraper
+import datetime
 
 class Command(BaseCommand):
     help = 'Sends notifications to phones with saved tokens'
