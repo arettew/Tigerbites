@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json 
 
 from notifications.models import Token
+from food.models import FoodItem 
 
 # Create your views here.
 
@@ -20,6 +21,19 @@ def token(request):
 
             token_val = post_data["to"]
             name = post_data["title"]
+
+            # Validate 
+            try: 
+                # Test if the token_val appears to be a expo push token 
+                if not token_val[:18] == "ExponentPushToken[":
+                    return HttpResponse(status=400)
+                if not token_val[-1:] == "]":
+                    return HttpResponse(status=400)
+                # Test if we've stored this item as a food item 
+                if not FoodItem.objects.filter(item_name = name).exists(): 
+                    return HttpResponse(status=400)
+            except: 
+                return HttpResponse(status=400)
 
             if Token.objects.filter(token=token_val).exists(): 
                 # User exists
