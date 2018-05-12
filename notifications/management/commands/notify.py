@@ -29,6 +29,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("success"))
 
+# Sends push message
 def send_push_message(token, message, extra=None):
     # Send the message 
     try:
