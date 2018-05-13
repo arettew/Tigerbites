@@ -46,6 +46,7 @@ def send_push_message(token, message, extra=None):
         from notifications.models import PushToken
         PushToken.objects.filter(token=token).update(active=False)
         Token.objects.filter(token=token).delete()
+        print("Device not registered error")
     except PushResponseError as exc:
         # Some other response error 
         print("There was a response error")
@@ -66,6 +67,7 @@ def message(matches):
         else: 
             foods = str(len(matches[dhall])) + " items. "
         message += foods
+    print(message)
     return message
 
 
