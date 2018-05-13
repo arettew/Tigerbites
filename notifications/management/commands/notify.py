@@ -54,13 +54,19 @@ def send_push_message(token, message, extra=None):
 # Creates a message based on the matches in the users' favorite foods and the current items 
 def message(matches): 
     message = ""
+
     for dhall in matches: 
         message += "At " + dhall + ": "
-        for item in matches[dhall]: 
-            message += item + ", "
-            # Removes last comma and space
-        message = message[:-2]
-        message += ". "
+        foods = "" 
+        if len(matches[dhall]) < 3:
+            for item in matches[dhall]: 
+                foods += item + ", "
+                # Removes last comma and space
+            foods = foods[:-2] + ". "
+        else: 
+            foods = str(len(matches[dhall])) + " items. "
+        message += foods
+    print (message)
     return message
 
 
