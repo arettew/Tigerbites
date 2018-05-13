@@ -76,6 +76,8 @@ def hasMeat(item):
         return True
     if "kielbasa" in item.ingredients.lower() or "kielbasa" in item.name.lower(): 
         return True
+    if "sausage" in item.ingredients.lower() or "sausage" in item.name.lower():
+        return True
         
     return False
 
