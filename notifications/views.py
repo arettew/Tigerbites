@@ -46,7 +46,7 @@ def token(request):
                 if button: 
                     try: 
                         favorites.remove(name)
-                    else:
+                    except:
                         pass
                 else: 
                     favorites.append(name)

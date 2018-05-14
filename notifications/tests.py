@@ -12,6 +12,7 @@ class PostTest(TestCase):
         self.factory = RequestFactory()
     
     def test_details(self):
+        FoodItems.objects.create(name='food')
         request = self.factory.post('/notifications', json.dumps({'to': 'ExponentPushToken[s28t0zDF95W7OMjk6hCiv1]', 'title': 'food', 'data': {'button': False}}), content_type='application/json')
         response = token(request)
         self.assertEqual(response.status_code, 202)
