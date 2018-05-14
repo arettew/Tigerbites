@@ -30,9 +30,6 @@ def token(request):
                 if not token_val[-1:] == "]":
                     return HttpResponse(status=400)
 
-                # Test if we've stored this item as a food item 
-                if not FoodItem.objects.filter(item_name = name).exists(): 
-                    return HttpResponse(status=400)
             except: 
                 return HttpResponse(status=400)
 

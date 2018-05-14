@@ -60,7 +60,6 @@ def message(matches):
         message += foods
     return message
 
-
 # Determines if there is a match between a list of the user's favorites and the daily items
 def matchItems(favorites, next_meal):
     matches = {} 

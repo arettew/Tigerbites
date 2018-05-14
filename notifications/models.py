@@ -8,7 +8,7 @@ class Token(models.Model):
 
     # Sets favorites, passed in as a list, as json
     def set_favorites(self, favorites):
-        self.favorites = json.dumps(x)
+        self.favorites = json.dumps(favorites)
 
     # Returns favorites, saved as json, as a list 
     def get_favorites(self):
