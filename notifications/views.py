@@ -8,8 +8,6 @@ from notifications.models import Token
 from food.models import FoodItem 
 
 @csrf_exempt
-@authentication_classes([])
-@permission_classes([])
 def token(request):
     if request.method == 'POST':
         try:
