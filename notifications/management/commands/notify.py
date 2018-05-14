@@ -26,7 +26,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("success"))
 
-# Sends push message
+# Sends push message. Adapted from expo-server-sdk documentation 
 def send_push_message(token, message):
     # Send the message 
     try:
