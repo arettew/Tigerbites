@@ -29,6 +29,7 @@ class Command(BaseCommand):
 # Sends push message. Adapted from expo-server-sdk documentation 
 def send_push_message(token, message):
     # Send the message 
+    print(message)
     try:
         response = PushClient().publish(PushMessage(to=token, body=message, data=None))
     except:
