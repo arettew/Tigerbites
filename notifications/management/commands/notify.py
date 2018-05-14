@@ -4,10 +4,7 @@ from notifications.models import Token
 from exponent_server_sdk import DeviceNotRegisteredError
 from exponent_server_sdk import PushClient
 from exponent_server_sdk import PushMessage
-from exponent_server_sdk import PushResponseError
 from exponent_server_sdk import PushServerError
-from requests.exceptions import ConnectionError
-from requests.exceptions import HTTPError
 
 import scraper
 import datetime
@@ -41,9 +38,7 @@ def send_push_message(token, message, extra=None):
         # Did we get a response? 
         response.validate_response()
     except DeviceNotRegisteredError:
-        # Mark the push token as inactive and remove from our database
-        from notifications.models import PushToken
-        PushToken.objects.filter(token=token).update(active=False)
+        # Remove push token from database 
         Token.objects.filter(token=token).delete()
         print("Device not registered error")
     except PushResponseError as exc:
@@ -65,6 +60,7 @@ def message(matches):
         else: 
             foods = str(len(matches[dhall])) + " items. "
         message += foods
+    print(message)
     return message
 
 
