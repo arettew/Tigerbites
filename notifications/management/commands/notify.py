@@ -60,7 +60,6 @@ def message(matches):
         else: 
             foods = str(len(matches[dhall])) + " items. "
         message += foods
-    print(message)
     return message
 
 
