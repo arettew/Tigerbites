@@ -36,7 +36,6 @@ def send_push_message(token, message, extra=None):
         response = PushClient().publish(PushMessage(to=token, body=message, data=extra))
     except:
         print("An error occurred when trying the send the message")
-        pass
 
     try:
         # Did we get a response? 
@@ -50,7 +49,6 @@ def send_push_message(token, message, extra=None):
     except PushResponseError as exc:
         # Some other response error 
         print("There was a response error")
-        pass
 
 # Creates a message based on the matches in the users' favorite foods and the current items 
 def message(matches): 
@@ -67,7 +65,6 @@ def message(matches):
         else: 
             foods = str(len(matches[dhall])) + " items. "
         message += foods
-    print(message)
     return message
 
 
