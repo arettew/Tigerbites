@@ -7,9 +7,17 @@ import json
 from notifications.models import Token
 from food.models import FoodItem 
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication 
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+
+    def enforce_csrf(self, request):
+        return
+
 # Accepts POST request that alters users' favorite foods list
 @csrf_exempt
 def token(request):
+    authentification_class = (CsrfExemptSessionAuthentification, BasicAuthentification)
     if request.method == 'POST':
         try:
             post_data = json.loads(request.body)
