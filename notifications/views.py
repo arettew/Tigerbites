@@ -21,6 +21,7 @@ def token(request):
 
             token_val = post_data["to"]
             name = post_data["title"]
+            button = post_data["data"]["button"]
 
             # Validate that the this appears to be the data we expect
             try: 
@@ -30,7 +31,7 @@ def token(request):
                 if not token_val[-1:] == "]":
                     return HttpResponse(status=400)
 
-                # Test if we've stored this item as a food item 
+                #Test if we've stored this item as a food item 
                 if not FoodItem.objects.filter(item_name = name).exists(): 
                     return HttpResponse(status=400)
             except: 
@@ -42,8 +43,11 @@ def token(request):
             
                 # Adds or removes from favorites
                 favorites = Token.get_favorites(user)
-                if name in favorites: 
-                    favorites.remove(name)
+                if button: 
+                    try: 
+                        favorites.remove(name)
+                    else:
+                        pass
                 else: 
                     favorites.append(name)
             
