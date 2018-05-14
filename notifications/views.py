@@ -18,6 +18,10 @@ def token(request):
                 return HttpResponse(status=400)
             elif not "title" in post_data:
                 return HttpResponse(status=400)
+            elif not "data" in post_data:
+                return HttpResponse(status=400)
+            elif not "button" in post_data["data"]:
+                return HttpResponse(status=400)
 
             token_val = post_data["to"]
             name = post_data["title"]
