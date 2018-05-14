@@ -17,14 +17,9 @@ def token(request):
                 return HttpResponse(status=400)
             elif not "title" in post_data:
                 return HttpResponse(status=400)
-            elif not "data" in post_data:
-                return HttpResponse(status=400)
-            elif not "button" in post_data["data"]:
-                return HttpResponse(status=400)
 
             token_val = post_data["to"]
             name = post_data["title"]
-            button = post_data["data"]["button"]
 
             # Validate that the this appears to be the data we expect
             try: 
@@ -46,7 +41,7 @@ def token(request):
             
                 # Adds or removes from favorites
                 favorites = Token.get_favorites(user)
-                if button: 
+                if not name in favorites: 
                     try: 
                         favorites.remove(name)
                     except:
