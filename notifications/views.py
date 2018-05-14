@@ -9,7 +9,6 @@ from food.models import FoodItem
 
 @csrf_exempt
 def token(request):
-    authentification_classes = []
     if request.method == 'POST':
         try:
             post_data = json.loads(request.body)
