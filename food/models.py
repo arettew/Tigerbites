@@ -1,7 +1,6 @@
 from django.db import models
 
-# Create your models here.
-
+# Food items that can be served on campus
 class FoodItem(models.Model):
    item_name = models.CharField(max_length=200, default="", primary_key=True)
    category = models.CharField(max_length=200, default="")

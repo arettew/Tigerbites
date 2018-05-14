@@ -1,7 +1,7 @@
 from django.db import models
 import json
 
-# Create your models here.
+# Users and their favorite foods
 class Token(models.Model):
     token = models.CharField(max_length=100, default="", primary_key=True)
     favorites = models.TextField(default = "")
