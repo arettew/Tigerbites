@@ -41,11 +41,8 @@ def token(request):
             
                 # Adds or removes from favorites
                 favorites = Token.get_favorites(user)
-                if not name in favorites: 
-                    try: 
-                        favorites.remove(name)
-                    except:
-                        pass
+                if name in favorites: 
+                    favorites.remove(name)
                 else: 
                     favorites.append(name)
             
