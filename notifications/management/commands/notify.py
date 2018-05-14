@@ -23,7 +23,6 @@ class Command(BaseCommand):
             matches = matchItems(Token.get_favorites(user), next_meal)
             if matches:
                 send_push_message(user.token, message(matches))
-                print(message(matches))
 
         self.stdout.write(self.style.SUCCESS("success"))
 
@@ -36,14 +35,12 @@ def send_push_message(token, message):
         print("An error occurred when trying the send the message")
 
     try:
-        # Did we get a response? 
         response.validate_response()
     except DeviceNotRegisteredError:
         # Remove push token from database 
         Token.objects.filter(token=token).delete()
         print("Device not registered error")
-    except PushResponseError as exc:
-        # Some other response error 
+    except PushResponseError:
         print("There was a response error")
 
 # Creates a message based on the matches in the users' favorite foods and the current items 

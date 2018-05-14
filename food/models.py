@@ -13,6 +13,3 @@ class FoodItem(models.Model):
    carbs = models.FloatField(default=0)
    ingredients = models.CharField(max_length = 2000, default = "")
    allergens = models.CharField(max_length = 2000, default = "")
-
-   def __str__(self):
-       return self.item_name

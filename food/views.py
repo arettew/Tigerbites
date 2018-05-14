@@ -5,7 +5,7 @@ from food.models import FoodItem
 import json 
 import datetime
 
-# Create your views here.
+# Page that shows current meal items
 def today(request):
     scraping_results = scrapeTigerMenus()
     all_items = sorted(list(FoodItem.objects.all().values_list('item_name', flat=True)))
@@ -23,12 +23,15 @@ def today(request):
                     
                     if not category in food[dhall]:
                         food[dhall][category] = {}
+
                     food[dhall][category][item] = index
                 except: 
                     # This item isn't in the database; throw it out and remove category if empty
                     scraping_results[dhall][category].remove(item)
 
     return HttpResponse(json.dumps(food))
+
+# Page that shows all possible items
 def all(request):
     results = FoodItem.objects.values()
     list_results = list(results)
