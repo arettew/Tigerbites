@@ -23,14 +23,15 @@ class Command(BaseCommand):
             matches = matchItems(Token.get_favorites(user), next_meal)
             if matches:
                 send_push_message(user.token, message(matches))
+                print(message(matches))
 
         self.stdout.write(self.style.SUCCESS("success"))
 
 # Sends push message
-def send_push_message(token, message, extra=None):
+def send_push_message(token, message):
     # Send the message 
     try:
-        response = PushClient().publish(PushMessage(to=token, body=message, data=extra))
+        response = PushClient().publish(PushMessage(to=token, body=message, data=None))
     except:
         print("An error occurred when trying the send the message")
 
